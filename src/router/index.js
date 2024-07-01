@@ -19,11 +19,6 @@ const router = createRouter({
       component: () => import('@/components/SignUp.vue')
     },
     {
-      path: '/verify/code',
-      name: 'Verification',
-      component: () => import('@/components/VerifyPage.vue')
-    },
-    {
       path: '/account/reset',
       name: 'Reset Account',
       component: () => import('@/components/ResetAccount.vue')

@@ -31,5 +31,6 @@ coverage
 *.tsbuildinfo
 
 db
+/src/lib
 
 .vscode
