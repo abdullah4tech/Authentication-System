@@ -39,8 +39,9 @@ const login = async () => {
     // Handle successful login
     console.log(response.data);
   } catch (error) {
+    state.errorMessage = `Login failed. ${error.response.data.message}.`;
     setTimeout(() => {
-      state.errorMessage = `Login failed. ${error.message}.`;
+      state.errorMessage = ''
     }, 2000)
   } finally {
     state.loading = false;
@@ -56,9 +57,10 @@ const vali = () => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen py-3 px-5 md:px-0">
+
+  <div class="flex flex-col items-center justify-center min-h-screen px-5 md:px-0">
     <form @submit.prevent="login" class="w-96 max-w-lg flex flex-col p-5">
-      <h1 class="text-2xl md:text-3xl text-gray-700 font-bold mb-8 text-center">Login</h1>
+      <h1 class="text-2xl md:text-2xl text-gray-700 font-bold mb-5 text-center">Welcome Back!</h1>
       
       <!-- Username Input -->
       <div class="mb-4">

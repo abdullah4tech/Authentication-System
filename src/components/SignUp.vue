@@ -24,7 +24,7 @@ const validateForm = () => {
 
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(state.email)) {
-    errorMessage.value = 'Invalid email format.';
+    errorMessage.value = 'Invalid email';
     return false;
   }
 
@@ -42,18 +42,28 @@ const sendData = async () => {
 
   loading.value = true;
   try {
-    const response = await axios.post('http://localhost:3000/users', state, {
+    const response = await axios.post('http://localhost:3000/signup', {
+      fullname: state.fullname.trim(),
+      username: state.username.trim(),
+      email: state.email.trim(),
+      password: state.pwd.trim()
+    }, 
+    {
       headers: {
         'Content-Type': 'application/json'
       }
     });
-    successMessage.value = 'User created successfully: ' + response.data.fullname;
+    successMessage.value = response.data.message;
     // Clear success message after 2 seconds
     setTimeout(() => {
       successMessage.value = '';
+      state.fullname = ''
+      state.username = ''
+      state.email = ''
+      state.pwd = ''
     }, 2000);
   } catch (error) {
-    errorMessage.value = 'Error: ' + error.message;
+    errorMessage.value = 'Error: ' + error.response.data.message;
     // Clear error message after 5 seconds
     setTimeout(() => {
       errorMessage.value = '';
@@ -85,7 +95,7 @@ const sendData = async () => {
       </div>
     </transition>
 
-    <div class="flex flex-col items-center justify-center mt-16 mb-10">
+    <div class="flex flex-col items-center justify-center min-h-screen px-5 md:px-0">
       <form @submit.prevent="sendData" class="w-96 max-w-lg flex flex-col">
         <div class="flex flex-wrap -mx-3 mb-6">
           <!-- Full Name Input -->
